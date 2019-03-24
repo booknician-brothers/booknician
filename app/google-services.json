@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "364261824263",
+    "firebase_url": "https://booknician-3a327.firebaseio.com",
+    "project_id": "booknician-3a327",
+    "storage_bucket": "booknician-3a327.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:364261824263:android:ffabfe62ed592380",
+        "android_client_info": {
+          "package_name": "vishnu.rai.booknician"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "364261824263-0c1n6b0acvrgn3dhvj17oon8shbq242s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "vishnu.rai.booknician",
+            "certificate_hash": "94c75faed4857d73863e584f481441af66a5359e"
+          }
+        },
+        {
+          "client_id": "364261824263-4obshol71kdeaibce0ecqe0400qqpljt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfviy7gcisbANBg2gj9q3Fi_Q-Uni6Abc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "364261824263-4obshol71kdeaibce0ecqe0400qqpljt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

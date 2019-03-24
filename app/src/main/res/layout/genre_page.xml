@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Genrepage">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="56dp"
+            android:weightSum="3">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/background">
+
+                    <TextView
+                        android:id="@+id/romantic_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:fontFamily="@font/amarante"
+                        android:gravity="center"
+                        android:text="ROMANTIC"
+                        android:textColor="#ffffff"
+                        android:textSize="30dp" />
+
+                    <TextView
+                        android:id="@+id/suspense_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:fontFamily="@font/amarante"
+                        android:gravity="center"
+                        android:text="SUSPENSE AND THRILLER"
+                        android:textColor="#ffffff"
+                        android:textSize="30dp" />
+
+                    <TextView
+                        android:id="@+id/horror_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:fontFamily="@font/amarante"
+                        android:gravity="center"
+                        android:text="HORROR FICTIONN"
+                        android:textColor="#ffffff"
+                        android:textSize="30dp" />
+
+                    <TextView
+                        android:id="@+id/science_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:fontFamily="@font/amarante"
+                        android:gravity="center"
+                        android:text="SCIENCE FICTION"
+                        android:textColor="#ffffff"
+                        android:textSize="30dp" />
+
+                    <TextView
+                        android:id="@+id/womenn_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:fontFamily="@font/amarante"
+                        android:gravity="center"
+                        android:text="WOMEN'S FICTION"
+                        android:textColor="#ffffff"
+                        android:textSize="30dp" />
+
+                    <TextView
+                        android:id="@+id/fantasy_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:fontFamily="@font/amarante"
+                        android:gravity="center"
+                        android:text="FANTASYY"
+                        android:textColor="#ffffff"
+                        android:textSize="30dp" />
+
+                    <TextView
+                        android:id="@+id/biography_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:fontFamily="@font/amarante"
+                        android:gravity="center"
+                        android:text="BIOGRAPHY"
+                        android:textColor="#ffffff"
+                        android:textSize="30dp" />
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:weightSum="3"
+                android:background="#4b0082"
+                android:layout_gravity="bottom">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="56dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingTop="8dp">
+
+                    <ImageView
+                        android:id="@+id/home_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_home_black_24dp"
+                        android:layout_gravity="center"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="56dp"
+                    android:paddingTop="8dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/myorder_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_shopping_cart_black_24dp"
+                        android:layout_gravity="center"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="56dp"
+                    android:paddingTop="8dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/profile_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_person_black_24dp"
+                        android:layout_gravity="center" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

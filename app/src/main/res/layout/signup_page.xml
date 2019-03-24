@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:weightSum="100"
+    tools:context=".Signuppage"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="90">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/amarante"
+                    android:text="Enter your Details"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="40dp"
+                    android:layout_marginBottom="10dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/amarante"
+                    android:text="NOTE: All Fields are Mandatory"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="20dp"
+                    android:layout_marginBottom="30dp"/>
+
+
+                <EditText
+                    android:id="@+id/namesignup_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/rounded_white"
+                    android:drawableLeft="@drawable/na"
+                    android:hint="Name"
+                    android:inputType="textPersonName" />
+
+
+                <EditText
+                    android:id="@+id/phonesignup_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/rounded_white"
+                    android:drawableLeft="@drawable/phn"
+                    android:hint="Phone Number"
+                    android:inputType="numberSigned" />
+
+
+
+                <EditText
+                    android:id="@+id/emailsignup_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/rounded_white"
+                    android:drawableLeft="@drawable/mali"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress" />
+
+                <EditText
+                    android:id="@+id/passwordsignup_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/rounded_white"
+                    android:drawableLeft="@drawable/paa"
+                    android:hint="Password"
+                    android:inputType="textPassword" />
+
+                <EditText
+                    android:id="@+id/confirmpasswordsignup_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/rounded_white"
+                    android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+                    android:hint="Confirm Password"
+                    android:inputType="textPassword" />
+
+                <RadioButton
+                    android:id="@+id/radiosignup_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/amaranth_bold"
+                    android:text="I agree to the terms and conditions"
+                    android:textColor="#ffffff"
+                    android:textSize="18dp" />
+
+                <Button
+                    android:id="@+id/finalsignup_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:background="#432996"
+                    android:fontFamily="@font/allerta"
+                    android:text="Sign Up"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="18sp" />
+
+
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
+

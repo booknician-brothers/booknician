@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Loginpage"
+    android:background="@drawable/background"
+    android:weightSum="100"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="15"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/skip_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SKIP"
+            android:layout_gravity="right"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:textSize="15sp" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="85"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/amarante"
+            android:text="Get Started"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="35dp" />
+
+        <AutoCompleteTextView
+            android:id="@+id/email_et"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="Email"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/rounded_corners"
+            android:drawableLeft="@drawable/lgem"
+            android:layout_marginTop="15dp"/>
+
+
+        <AutoCompleteTextView
+            android:id="@+id/password_et"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="Password"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:drawableLeft="@drawable/lgps"
+            android:layout_marginTop="20dp"
+            android:inputType="textPassword"
+            android:background="@drawable/rounded_corners"/>
+
+
+        <Button
+            android:id="@+id/login_btn"
+            android:layout_width="114dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="#D6491787"
+            android:fontFamily="@font/aladin"
+            android:text="Log In"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/averia_libre_light"
+            android:text="New User? Sign up to get started"
+            android:textAlignment="center"
+            android:textColor="@android:color/background_light"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/signup_btn"
+            android:layout_width="114dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="#D6491787"
+            android:fontFamily="@font/aladin"
+            android:text="Sign UP"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/averia_libre_light"
+            android:text="OR Use"
+            android:textAlignment="center"
+            android:textColor="@android:color/background_light"
+            android:textSize="15sp" />
+
+
+        <Button
+            android:id="@+id/googlesignup_btn"
+            android:layout_width="wrap_content"
+            android:paddingLeft="5dp"
+            android:paddingRight="10dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="#ffffff"
+            android:drawableLeft="@drawable/ggicb"
+            android:fontFamily="@font/aladin"
+            android:text="Sign In"
+            android:textAlignment="center"
+            android:textColor="@android:color/background_dark" />
+
+
+
+
+
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

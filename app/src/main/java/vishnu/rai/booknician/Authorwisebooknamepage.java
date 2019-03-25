@@ -14,33 +14,32 @@ import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.google.android.gms.auth.api.Auth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import vishnu.rai.booknician.View_holder.item_view_holder;
 import vishnu.rai.booknician.model.recyclerview_item;
 
-public class Authorpage extends AppCompatActivity implements View.OnClickListener{
+public class Authorwisebooknamepage extends AppCompatActivity implements View.OnClickListener {
 
-    RecyclerView authorname_recycler_view;
+    RecyclerView authorwise_bookname_recycler_view;
 
     ImageView home_button, order_button, profile_button;
 
-    public static String  authorname_clicked_name;
+    public static int  authorwise_book_position;
 
     DatabaseReference mdatabaseReference;
     FirebaseRecyclerOptions<recyclerview_item> options;
     FirebaseRecyclerAdapter<recyclerview_item, item_view_holder> adapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.author_page);
+        setContentView(R.layout.authorwise_bookname_page);
 
 
         home_button=findViewById(R.id.home_button);
@@ -52,43 +51,48 @@ public class Authorpage extends AppCompatActivity implements View.OnClickListene
         order_button.setOnClickListener(this);
 
 
-        authorname_recycler_view=findViewById(R.id.authorname_recycler_view);
 
-        authorname_recycler_view.hasFixedSize();
+        authorwise_bookname_recycler_view=findViewById(R.id.authorwise_bookname_recycler_view);
 
-        mdatabaseReference=  FirebaseDatabase.getInstance().getReference().child("Author name");
+        authorwise_bookname_recycler_view.hasFixedSize();
+
+        mdatabaseReference= FirebaseDatabase.getInstance().getReference().child("Book author wise").child(Authorpage.authorname_clicked_name);
 
         options = new FirebaseRecyclerOptions.Builder<recyclerview_item>().setQuery(mdatabaseReference,recyclerview_item.class).build();
+
 
         adapter= new FirebaseRecyclerAdapter<recyclerview_item, item_view_holder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull item_view_holder holder, final int position, @NonNull recyclerview_item model) {
 
 
-                holder.author_name.setText(model.getAuthorname());
+
+                Picasso.with(getApplicationContext()).load(model.getImage()).into(holder.book_image, new Callback() {
+
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError() {
+
+                        Toast.makeText(getApplicationContext(),"Image Not Loading", Toast.LENGTH_LONG).show();
+
+                    }
+                });
 
 
-                holder.author_name.setOnClickListener(new View.OnClickListener() {
+                holder.book_name.setText(model.getName());
+
+
+                holder.book_name.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
-                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                        DatabaseReference mDatabase = ref.child("Author name").child(String.valueOf(position));
+                       authorwise_book_position = position;
 
-                        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                authorname_clicked_name = dataSnapshot.child("authorname").getValue(String.class); }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-
-
-                        //Toast.makeText(Authorpage.this,authorname_clicked_name,Toast.LENGTH_LONG).show();
-                        Intent intent= new Intent(Authorpage.this, Authorwisebooknamepage.class);
+                        Intent intent= new Intent(Authorwisebooknamepage.this, Authorwisebookorderpage.class);
                         startActivity(intent);
 
 
@@ -104,18 +108,23 @@ public class Authorpage extends AppCompatActivity implements View.OnClickListene
             @Override
             public item_view_holder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.authorname_layout, viewGroup,  false);
+                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.books_layout, viewGroup,  false);
                 return new item_view_holder(view);
             }
         };
 
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),1);
-        authorname_recycler_view.setLayoutManager(gridLayoutManager);
+        authorwise_bookname_recycler_view.setLayoutManager(gridLayoutManager);
         adapter.startListening();
-        authorname_recycler_view.setAdapter(adapter);
+        authorwise_bookname_recycler_view.setAdapter(adapter);
+
+
+
 
     }
+
+
 
     @Override
     protected void onStart() {
@@ -143,8 +152,7 @@ public class Authorpage extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-
-        switch (v.getId()){
+        switch (v.getId()) {
 
             case R.id.home_button:
                 Intent intent = new Intent(getApplicationContext(), home_page.class);
@@ -160,8 +168,6 @@ public class Authorpage extends AppCompatActivity implements View.OnClickListene
             case R.id.order_button:
 
                 break;
-
         }
-
     }
 }

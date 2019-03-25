@@ -17,11 +17,26 @@ public class Genrepage extends AppCompatActivity implements View.OnClickListener
 
     Intent intent;
 
+    ImageView home_button, order_button, profile_button;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.genre_page);
+
+
+
+        home_button=findViewById(R.id.home_button);
+        order_button=findViewById(R.id.order_button);
+        profile_button=findViewById(R.id.profile_button);
+
+        home_button.setOnClickListener(this);
+        profile_button.setOnClickListener(this);
+        order_button.setOnClickListener(this);
+
+
 
         horror_tv=findViewById(R.id.horror_tv);
         romantic_tv=findViewById(R.id.romantic_tv);
@@ -39,18 +54,8 @@ public class Genrepage extends AppCompatActivity implements View.OnClickListener
         women_tv.setOnClickListener(this);
         biography_tv.setOnClickListener(this);
         science_tv.setOnClickListener(this);
+        suspense_tv.setOnClickListener(this);
 
-
-
-
-        home_btn=findViewById(R.id.home_btn);
-        myorder_btn=findViewById(R.id.myorder_btn);
-        profile_btn=findViewById(R.id.profile_btn);
-
-
-        home_btn.setOnClickListener(this);
-        myorder_btn.setOnClickListener(this);
-        profile_btn.setOnClickListener(this);
 
 
     }
@@ -121,6 +126,22 @@ public class Genrepage extends AppCompatActivity implements View.OnClickListener
 
                 intent= new Intent(Genrepage.this, Genrebooktype.class);
                 startActivity(intent);
+
+                break;
+
+
+            case R.id.home_button:
+                Intent intent = new Intent(getApplicationContext(), home_page.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+
+                break;
+
+            case R.id.profile_button:
+
+                break;
+
+            case R.id.order_button:
 
                 break;
 

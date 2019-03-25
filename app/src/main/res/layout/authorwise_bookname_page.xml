@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Bestsellerbookpage">
-
+    tools:context=".Authorwisebooknamepage">
 
 
     <RelativeLayout
@@ -14,7 +13,7 @@
 
         <android.support.v7.widget.RecyclerView
 
-            android:id="@+id/bestseller_recycler_view"
+            android:id="@+id/authorwise_bookname_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="50dp">
@@ -91,4 +90,7 @@
 
     </RelativeLayout>
 
+
 </LinearLayout>
+
+

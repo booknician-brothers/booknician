@@ -11,7 +11,7 @@ import vishnu.rai.booknician.R;
 
 public class item_view_holder extends RecyclerView.ViewHolder {
 
-    public  TextView book_name;
+    public  TextView book_name , author_name;
     public  ImageView book_image;
 
 
@@ -20,5 +20,6 @@ public class item_view_holder extends RecyclerView.ViewHolder {
 
         book_name=itemView.findViewById(R.id.book_name_iv);
         book_image= itemView.findViewById(R.id.book_image_iv);
+        author_name= itemView.findViewById(R.id.author_name_tv);
     }
 }

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -21,9 +22,12 @@ import com.squareup.picasso.Picasso;
 import vishnu.rai.booknician.View_holder.item_view_holder;
 import vishnu.rai.booknician.model.recyclerview_item;
 
-public class Genrebooktype extends AppCompatActivity {
+public class Genrebooktype extends AppCompatActivity implements View.OnClickListener{
 
     RecyclerView genre_recycler_view;
+
+    ImageView home_button, order_button, profile_button;
+
 
     public static int  genre_book_position;
 
@@ -35,6 +39,17 @@ public class Genrebooktype extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.genre_book_type);
+
+
+        home_button=findViewById(R.id.home_button);
+        order_button=findViewById(R.id.order_button);
+        profile_button=findViewById(R.id.profile_button);
+
+        home_button.setOnClickListener(this);
+        profile_button.setOnClickListener(this);
+        order_button.setOnClickListener(this);
+
+
 
         genre_recycler_view=findViewById(R.id.genre_recycler_view);
 
@@ -127,5 +142,27 @@ public class Genrebooktype extends AppCompatActivity {
         if(adapter!=null)
             adapter.startListening();
         super.onPostResume();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+
+            case R.id.home_button:
+                Intent intent = new Intent(getApplicationContext(), home_page.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+
+                break;
+
+            case R.id.profile_button:
+
+                break;
+
+            case R.id.order_button:
+
+                break;
+        }
+
     }
 }

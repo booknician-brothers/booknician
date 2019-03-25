@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".bestseller_orderpage"></activity>
+        <activity android:name=".Authorwisebookorderpage"></activity>
+        <activity android:name=".Authorwisebooknamepage" />
+        <activity android:name=".bestseller_orderpage" />
         <activity android:name=".Bestsellerbookpage" />
         <activity android:name=".Orderpage" />
         <activity android:name=".Authorpage" />

@@ -1,5 +1,6 @@
 package vishnu.rai.booknician;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
@@ -23,7 +24,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Orderpage extends AppCompatActivity {
+public class Orderpage extends AppCompatActivity implements View.OnClickListener{
 
 
     TextView orderpage_bookname_tv, orderpage_authorname_tv, orderpage_bookinstock_tv ,orderpage_priceforfixday_tv, orderpage_bookdailyprice_tv
@@ -31,9 +32,12 @@ public class Orderpage extends AppCompatActivity {
 
     ImageView orderpage_bookimage_iv;
 
+    ImageView home_button, order_button, profile_button;
 
 
-     String orderpage_bookname, orderpage_authorname, orderpage_bookinstock,orderpage_priceforfixday,
+
+
+    String orderpage_bookname, orderpage_authorname, orderpage_bookinstock,orderpage_priceforfixday,
             orderpage_bookdailyprice,orderpage_bookdescription;
 
     String orderpage_bookimage;
@@ -43,6 +47,16 @@ public class Orderpage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_page);
+
+        home_button=findViewById(R.id.home_button);
+        order_button=findViewById(R.id.order_button);
+        profile_button=findViewById(R.id.profile_button);
+
+        home_button.setOnClickListener(this);
+        profile_button.setOnClickListener(this);
+        order_button.setOnClickListener(this);
+
+
 
         final FirebaseDatabase database =  FirebaseDatabase.getInstance();
         final DatabaseReference Myref = database.getReference();
@@ -115,5 +129,26 @@ public class Orderpage extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+
+            case R.id.home_button:
+                Intent intent = new Intent(getApplicationContext(), home_page.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+
+                break;
+
+            case R.id.profile_button:
+
+                break;
+
+            case R.id.order_button:
+
+                break;
+        }
     }
 }

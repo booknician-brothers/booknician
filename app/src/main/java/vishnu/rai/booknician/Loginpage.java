@@ -20,7 +20,7 @@ public class Loginpage extends AppCompatActivity implements View.OnClickListener
 
     EditText email_et , password_et;
     Button  login_btn, signup_btn, googlesignup_btn;
-    TextView skip_tv;
+    TextView skip_tv, forgotpassword_tv;
     private FirebaseAuth.AuthStateListener AuthListner;
     private FirebaseAuth mAuth;
 
@@ -41,11 +41,13 @@ public class Loginpage extends AppCompatActivity implements View.OnClickListener
         signup_btn= findViewById(R.id.signup_btn);
         googlesignup_btn= findViewById(R.id.googlesignup_btn);
         skip_tv= findViewById(R.id.skip_tv);
+        forgotpassword_tv=findViewById(R.id.forgotpassword_tv);
 
         signup_btn.setOnClickListener(this);
         login_btn.setOnClickListener(this);
         googlesignup_btn.setOnClickListener(this);
         skip_tv.setOnClickListener(this);
+        forgotpassword_tv.setOnClickListener(this);
 
 
 
@@ -74,6 +76,15 @@ public class Loginpage extends AppCompatActivity implements View.OnClickListener
 
             case R.id.login_btn:
                 login();
+                break;
+
+            case R.id.skip_tv:
+                startActivity(new Intent(Loginpage.this, home_page.class));
+                finish();
+                break;
+
+            case R.id.forgotpassword_tv:
+                startActivity(new Intent(Loginpage.this, forgotpassactivity.class));
                 break;
 
         }

@@ -22,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Signuppage extends AppCompatActivity implements View.OnClickListener {
+public class Signuppage extends AppCompatActivity {
 
 
     EditText namesignup_et, phonesignup_et, emailsignup_et, passwordsignup_et, confirmpasswordsignup_et;
@@ -49,7 +49,14 @@ public class Signuppage extends AppCompatActivity implements View.OnClickListene
         finalsignup_btn = findViewById(R.id.finalsignup_btn);
         numberverify_btn = findViewById(R.id.numberverify_btn);
 
-        numberverify_btn.setOnClickListener(this);
+        numberverify_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                intent= new Intent(Signuppage.this, phoneverifypopup.class);
+                startActivity(intent);
+            }
+        });
 
         FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();
@@ -116,19 +123,4 @@ public class Signuppage extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-
-            case R.id.numberverify_btn:
-
-                intent = new Intent(Signuppage.this, phoneverifypopup.class);
-                startActivity(intent);
-
-                break;
-
-
-        }
-    }
 }

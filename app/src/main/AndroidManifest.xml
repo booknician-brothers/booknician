@@ -11,8 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".phoneverifypopup"
-            android:theme="@style/verifytheme"></activity>
+        <activity android:name=".forgotpassactivity"
+            android:theme="@style/popuptheme"></activity>
+        <activity
+            android:name=".phoneverifypopup"
+            android:theme="@style/popuptheme" />
         <activity android:name=".Authorwisebookorderpage" />
         <activity android:name=".Authorwisebooknamepage" />
         <activity android:name=".bestseller_orderpage" />

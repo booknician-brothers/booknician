@@ -74,7 +74,18 @@
             android:drawableLeft="@drawable/lgps"
             android:layout_marginTop="20dp"
             android:inputType="textPassword"
-            android:background="@drawable/rounded_corners"/>
+            android:background="@drawable/rounded_corners"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/forgotpassword_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/amaranth_bold"
+            android:text="Forgot Password"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
 
 
         <Button

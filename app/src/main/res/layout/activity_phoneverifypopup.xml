@@ -4,8 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F7EEEE"
+    android:background="@drawable/pop_bg"
+    android:layout_gravity="center"
+    android:orientation="vertical"
     tools:context=".phoneverifypopup">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/amaranth_bold"
+        android:text="A OTP has been sent to yor number "
+        android:textColor="@color/cardview_dark_background"
+        android:textSize="25sp" />
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:hint="Enter OTP"
+        android:inputType="number"
+        android:layout_gravity="center"
+        android:gravity="center"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Submit"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/averia_libre_light"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/averia_libre_light"
+        android:text="Resend OTP"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
 </LinearLayout>

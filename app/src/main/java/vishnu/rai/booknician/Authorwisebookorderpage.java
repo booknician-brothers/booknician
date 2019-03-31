@@ -40,6 +40,8 @@ public class Authorwisebookorderpage extends AppCompatActivity implements View.O
         final FirebaseDatabase database =  FirebaseDatabase.getInstance();
         final DatabaseReference Myref = database.getReference();
 
+        FirebaseDatabase database_book = FirebaseDatabase.getInstance();
+
         home_button=findViewById(R.id.home_button);
         order_button=findViewById(R.id.order_button);
         profile_button=findViewById(R.id.profile_button);
@@ -65,17 +67,10 @@ public class Authorwisebookorderpage extends AppCompatActivity implements View.O
 
 
                 orderpage_bookname = dataSnapshot.child("name").getValue(String.class);
-                orderpage_authorname= dataSnapshot.child("author").getValue(String.class);
-                orderpage_priceforfixday=dataSnapshot.child("fix price").getValue(String.class);
-                orderpage_bookdailyprice=dataSnapshot.child("daily price").getValue(String.class);
-                orderpage_bookdescription=dataSnapshot.child("description").getValue(String.class);
                 orderpage_bookimage=dataSnapshot.child("image").getValue(String.class);
 
                 orderpage_bookname_aw_tv.setText(orderpage_bookname);
-                orderpage_authorname_aw_tv.setText(orderpage_authorname);
-                orderpage_bookdescription_aw_tv.setText(orderpage_bookdescription);
-                orderpage_bookdailyprice_aw_tv.setText(orderpage_bookdailyprice);
-                orderpage_priceforfixday_aw_tv.setText(orderpage_priceforfixday);
+
 
                 //adding image
 
@@ -96,17 +91,33 @@ public class Authorwisebookorderpage extends AppCompatActivity implements View.O
         });
 
 
-        database.getReference("Book in stock").addValueEventListener(new ValueEventListener() {
+        database_book.getReference("Books").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                orderpage_bookinstock = dataSnapshot.child(orderpage_bookname).getValue(String.class);
+                orderpage_bookinstock = dataSnapshot.child(orderpage_bookname).child("Book In Stock").getValue(String.class);
 
                 if(orderpage_bookinstock.equalsIgnoreCase("0"))
                     orderpage_orderbutton_aw_tv.setText("Out of Stock");
 
                 else
                     orderpage_orderbutton_aw_tv.setText("Order Now");
+
+
+                orderpage_bookdailyprice = dataSnapshot.child(orderpage_bookname).child("Daily Price").getValue(String.class);
+                orderpage_bookdailyprice_aw_tv.setText(orderpage_bookdailyprice);
+
+
+                orderpage_priceforfixday = dataSnapshot.child(orderpage_bookname).child("Fix Price").getValue(String.class);
+                orderpage_priceforfixday_aw_tv.setText(orderpage_priceforfixday);
+
+
+                orderpage_bookdescription = dataSnapshot.child(orderpage_bookname).child("Description").getValue(String.class);
+                orderpage_bookdescription_aw_tv.setText(orderpage_bookdescription);
+
+
+                orderpage_authorname = dataSnapshot.child(orderpage_bookname).child("Author").getValue(String.class);
+                orderpage_authorname_aw_tv.setText(orderpage_authorname);
 
 
             }

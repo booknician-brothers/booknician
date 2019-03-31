@@ -13,10 +13,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:gravity="center"
         android:fontFamily="@font/amaranth_bold"
-        android:text="A OTP has been sent to yor number "
+        android:text="An OTP has been sent to your number "
         android:textColor="@color/cardview_dark_background"
-        android:textSize="25sp" />
+        android:textSize="20dp" />
 
     <EditText
         android:layout_width="250dp"
@@ -43,5 +44,6 @@
         android:fontFamily="@font/averia_libre_light"
         android:text="Resend OTP"
         android:textColor="@color/common_google_signin_btn_text_dark_focused" />
+
 
 </LinearLayout>

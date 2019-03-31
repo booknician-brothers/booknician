@@ -1,5 +1,6 @@
 package vishnu.rai.booknician;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,9 @@ public class Genrebooktype extends AppCompatActivity implements View.OnClickList
 
     ImageView home_button, order_button, profile_button;
 
+    ProgressDialog progressdialog;
+
+
 
     public static int  genre_book_position;
 
@@ -49,6 +53,10 @@ public class Genrebooktype extends AppCompatActivity implements View.OnClickList
         profile_button.setOnClickListener(this);
         order_button.setOnClickListener(this);
 
+
+        progressdialog = new ProgressDialog(Genrebooktype.this);
+        progressdialog.setMessage("Please Wait....");
+        progressdialog.show();
 
 
         genre_recycler_view=findViewById(R.id.genre_recycler_view);
@@ -88,7 +96,7 @@ public class Genrebooktype extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onClick(View view) {
 
-                        genre_book_position = position;
+                        genre_book_position = position+1;
 
                         Intent intent= new Intent(Genrebooktype.this, Orderpage.class);
                         startActivity(intent);
@@ -97,6 +105,8 @@ public class Genrebooktype extends AppCompatActivity implements View.OnClickList
                     }
                 });
 
+
+                progressdialog.dismiss();
 
             }
 

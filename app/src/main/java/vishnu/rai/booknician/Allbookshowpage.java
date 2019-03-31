@@ -1,5 +1,6 @@
 package vishnu.rai.booknician;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -25,22 +26,29 @@ import com.squareup.picasso.Picasso;
 import vishnu.rai.booknician.View_holder.item_view_holder;
 import vishnu.rai.booknician.model.recyclerview_item;
 
-public class Authorpage extends AppCompatActivity implements View.OnClickListener{
+public class Allbookshowpage extends AppCompatActivity implements View.OnClickListener {
 
-    RecyclerView authorname_recycler_view;
+    RecyclerView allbooks_recycler_view;
+
+    public static String allbook_clicked_name;
 
     ImageView home_button, order_button, profile_button;
 
-    public static String  authorname_clicked_name;
+    ProgressDialog progressdialog;
 
     DatabaseReference mdatabaseReference;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+
     FirebaseRecyclerOptions<recyclerview_item> options;
+
     FirebaseRecyclerAdapter<recyclerview_item, item_view_holder> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.author_page);
+        setContentView(R.layout.all_book_page);
+
 
 
         home_button=findViewById(R.id.home_button);
@@ -52,49 +60,71 @@ public class Authorpage extends AppCompatActivity implements View.OnClickListene
         order_button.setOnClickListener(this);
 
 
-        authorname_recycler_view=findViewById(R.id.authorname_recycler_view);
 
-        authorname_recycler_view.hasFixedSize();
+        allbooks_recycler_view=findViewById(R.id.allbooks_recycler_view);
 
-        mdatabaseReference=  FirebaseDatabase.getInstance().getReference().child("Author name");
+        progressdialog = new ProgressDialog(Allbookshowpage.this);
+        progressdialog.setMessage("Please Wait....");
+        progressdialog.show();
+
+        allbooks_recycler_view.hasFixedSize();
+
+        mdatabaseReference= FirebaseDatabase.getInstance().getReference().child("Books");
 
         options = new FirebaseRecyclerOptions.Builder<recyclerview_item>().setQuery(mdatabaseReference,recyclerview_item.class).build();
 
+
         adapter= new FirebaseRecyclerAdapter<recyclerview_item, item_view_holder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull item_view_holder holder, final int position, @NonNull recyclerview_item model) {
+            protected void onBindViewHolder(@NonNull final item_view_holder holder, final int position, @NonNull final recyclerview_item model) {
 
 
-                holder.author_name.setText(model.getAuthorname());
+
+                Picasso.with(getApplicationContext()).load(model.getImage()).into(holder.book_image, new Callback() {
+
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError() {
+
+                        Toast.makeText(getApplicationContext(),"Image Not Loading", Toast.LENGTH_LONG).show();
+
+                    }
+                });
 
 
-                holder.author_name.setOnClickListener(new View.OnClickListener() {
+                holder.book_name.setText(model.getName());
+
+
+                holder.book_name.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
-                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                        DatabaseReference mDatabase = ref.child("Author name").child(String.valueOf(position+1));
+                        database.getReference().child("Books").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                authorname_clicked_name = dataSnapshot.child("authorname").getValue(String.class); }
+                            allbook_clicked_name = model.getName();
+
+                            Intent intent= new Intent(Allbookshowpage.this, bestseller_orderpage.class);
+                            startActivity(intent);
+
+                            }
 
                             @Override
-                            public void onCancelled(DatabaseError databaseError) {
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
                             }
                         });
 
 
-                        //Toast.makeText(Authorpage.this,authorname_clicked_name,Toast.LENGTH_LONG).show();
-                        Intent intent= new Intent(Authorpage.this, Authorwisebooknamepage.class);
-                        startActivity(intent);
-
-
                     }
                 });
 
+                progressdialog.dismiss();
 
             }
 
@@ -104,42 +134,22 @@ public class Authorpage extends AppCompatActivity implements View.OnClickListene
             @Override
             public item_view_holder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.authorname_layout, viewGroup,  false);
+                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.books_layout, viewGroup,  false);
                 return new item_view_holder(view);
             }
         };
 
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),1);
-        authorname_recycler_view.setLayoutManager(gridLayoutManager);
+        allbooks_recycler_view.setLayoutManager(gridLayoutManager);
         adapter.startListening();
-        authorname_recycler_view.setAdapter(adapter);
+        allbooks_recycler_view.setAdapter(adapter);
+
 
     }
 
-    @Override
-    protected void onStart() {
-
-        if(adapter!=null)
-            adapter.startListening();
-        super.onStart();
-
-    }
-
-    @Override
-    protected void onStop() {
-        if(adapter!=null)
-            adapter.stopListening();
-        super.onStop();
-    }
 
 
-    @Override
-    protected void onPostResume() {
-        if(adapter!=null)
-            adapter.startListening();
-        super.onPostResume();
-    }
 
     @Override
     public void onClick(View v) {
@@ -160,7 +170,6 @@ public class Authorpage extends AppCompatActivity implements View.OnClickListene
             case R.id.order_button:
 
                 break;
-
         }
 
     }

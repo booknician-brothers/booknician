@@ -1,5 +1,6 @@
 package vishnu.rai.booknician;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +32,9 @@ public class Authorwisebooknamepage extends AppCompatActivity implements View.On
 
     public static int  authorwise_book_position;
 
+    ProgressDialog progressdialog;
+
+
     DatabaseReference mdatabaseReference;
     FirebaseRecyclerOptions<recyclerview_item> options;
     FirebaseRecyclerAdapter<recyclerview_item, item_view_holder> adapter;
@@ -50,6 +54,10 @@ public class Authorwisebooknamepage extends AppCompatActivity implements View.On
         profile_button.setOnClickListener(this);
         order_button.setOnClickListener(this);
 
+
+        progressdialog = new ProgressDialog(Authorwisebooknamepage.this);
+        progressdialog.setMessage("Please Wait....");
+        progressdialog.show();
 
 
         authorwise_bookname_recycler_view=findViewById(R.id.authorwise_bookname_recycler_view);
@@ -90,7 +98,7 @@ public class Authorwisebooknamepage extends AppCompatActivity implements View.On
                     @Override
                     public void onClick(View view) {
 
-                       authorwise_book_position = position;
+                       authorwise_book_position = position+1;
 
                         Intent intent= new Intent(Authorwisebooknamepage.this, Authorwisebookorderpage.class);
                         startActivity(intent);
@@ -98,6 +106,8 @@ public class Authorwisebooknamepage extends AppCompatActivity implements View.On
 
                     }
                 });
+
+                progressdialog.dismiss();
 
 
             }

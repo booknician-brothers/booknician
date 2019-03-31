@@ -4,80 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home_page"
-    android:orientation="vertical">
+    tools:context=".Bestsellerbookpage">
+
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <android.support.v7.widget.RecyclerView
 
-        <LinearLayout
+            android:id="@+id/allbooks_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginBottom="56dp"
-            android:weightSum="4"
-            android:background="@drawable/background">
+            android:layout_marginBottom="50dp">
 
-
-
-            <Button
-                android:id="@+id/allbooks_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="All Books"
-                android:textSize="50dp"
-                android:textColor="#ffffff"
-                android:background="?android:attr/selectableItemBackground"
-                android:fontFamily="@font/aladin"/>
-
-
-            <Button
-                android:id="@+id/genre_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Genre"
-                android:textSize="50dp"
-                android:textColor="#ffffff"
-                android:background="?android:attr/selectableItemBackground"
-                android:fontFamily="@font/aladin"/>
-
-
-            <Button
-                android:id="@+id/author_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="author"
-                android:textSize="50dp"
-                android:textColor="#ffffff"
-                android:background="?android:attr/selectableItemBackground"
-                android:fontFamily="@font/aladin"/>
-
-
-
-            <Button
-                android:id="@+id/bestseller_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="best seller"
-                android:textSize="50dp"
-                android:textColor="#ffffff"
-                android:background="?android:attr/selectableItemBackground"
-                android:fontFamily="@font/aladin"/>
-
-
-        </LinearLayout>
+        </android.support.v7.widget.RecyclerView>
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
 
             <LinearLayout
@@ -94,9 +41,8 @@
                     android:orientation="vertical"
                     android:paddingTop="8dp">
 
-
                     <ImageView
-                        android:id="@+id/home_btn"
+                        android:id="@+id/home_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_home_black_24dp"
@@ -104,7 +50,6 @@
 
                 </LinearLayout>
 
-
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="56dp"
@@ -112,9 +57,8 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-
                     <ImageView
-                        android:id="@+id/myorder_btn"
+                        android:id="@+id/order_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_shopping_cart_black_24dp"
@@ -122,7 +66,6 @@
 
                 </LinearLayout>
 
-
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="56dp"
@@ -130,9 +73,8 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-
                     <ImageView
-                        android:id="@+id/profile_btn"
+                        android:id="@+id/profile_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_person_black_24dp"
@@ -140,9 +82,12 @@
 
                 </LinearLayout>
 
+
             </LinearLayout>
 
+
         </LinearLayout>
+
 
     </RelativeLayout>
 

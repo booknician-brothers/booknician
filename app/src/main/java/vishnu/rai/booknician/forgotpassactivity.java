@@ -19,7 +19,7 @@ public class forgotpassactivity extends AppCompatActivity {
         int width=dm.widthPixels;
         int height=dm.heightPixels;
 
-        getWindow().setLayout((int)(width*.8),(int)(height*.4));
+        getWindow().setLayout((int)(width*.85),(int)(height*.6));
 
         WindowManager.LayoutParams params=getWindow().getAttributes();
         params.gravity= Gravity.CENTER;

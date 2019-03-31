@@ -11,12 +11,17 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".forgotpassactivity"
-            android:theme="@style/popuptheme"></activity>
+        <activity android:name=".Allbookorderpage"></activity>
+        <activity android:name=".Allbookshowpage" />
+        <activity
+            android:name=".forgotpassactivity"
+            android:theme="@style/popuptheme" />
         <activity
             android:name=".phoneverifypopup"
             android:theme="@style/popuptheme" />
         <activity android:name=".Authorwisebookorderpage" />
+        <activity android:name=".newaddressphone" />
+        <activity android:name=".addressphone" />
         <activity android:name=".Authorwisebooknamepage" />
         <activity android:name=".bestseller_orderpage" />
         <activity android:name=".Bestsellerbookpage" />

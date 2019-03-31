@@ -1,5 +1,6 @@
 package vishnu.rai.booknician;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +31,7 @@ public class Bestsellerbookpage extends AppCompatActivity implements View.OnClic
 
     ImageView home_button, order_button, profile_button;
 
+    ProgressDialog progressdialog;
 
     DatabaseReference mdatabaseReference;
     FirebaseRecyclerOptions<recyclerview_item> options;
@@ -50,7 +52,9 @@ public class Bestsellerbookpage extends AppCompatActivity implements View.OnClic
         profile_button.setOnClickListener(this);
         order_button.setOnClickListener(this);
 
-
+        progressdialog = new ProgressDialog(Bestsellerbookpage.this);
+        progressdialog.setMessage("Please Wait....");
+        progressdialog.show();
 
         bestseller_recycler_view=findViewById(R.id.bestseller_recycler_view);
 
@@ -90,7 +94,7 @@ public class Bestsellerbookpage extends AppCompatActivity implements View.OnClic
                     @Override
                     public void onClick(View view) {
 
-                        genre_book_position = position;
+                        genre_book_position = position+1;
 
                         Intent intent= new Intent(Bestsellerbookpage.this, bestseller_orderpage.class);
                         startActivity(intent);
@@ -100,6 +104,7 @@ public class Bestsellerbookpage extends AppCompatActivity implements View.OnClic
                 });
 
 
+                progressdialog.dismiss();
             }
 
 
@@ -112,6 +117,7 @@ public class Bestsellerbookpage extends AppCompatActivity implements View.OnClic
                 return new item_view_holder(view);
             }
         };
+
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),1);
         bestseller_recycler_view.setLayoutManager(gridLayoutManager);

@@ -13,7 +13,7 @@ public class home_page extends AppCompatActivity implements View.OnClickListener
 
 
     Button genre_btn, author_btn, bestseller_btn, allbooks_btn;
-    ImageView home_btn, myorder_btn, profile_btn;
+    ImageView home_button, order_button, profile_button;
 
     Intent intent;
 
@@ -28,17 +28,17 @@ public class home_page extends AppCompatActivity implements View.OnClickListener
         bestseller_btn = findViewById(R.id.bestseller_btn);
         allbooks_btn = findViewById(R.id.allbooks_btn);
 
-        home_btn = findViewById(R.id.home_btn);
-        myorder_btn = findViewById(R.id.myorder_btn);
-        profile_btn = findViewById(R.id.profile_btn);
+        home_button = findViewById(R.id.home_button);
+        order_button = findViewById(R.id.order_button);
+        profile_button = findViewById(R.id.profile_button);
         allbooks_btn.setOnClickListener(this);
 
         genre_btn.setOnClickListener(this);
         author_btn.setOnClickListener(this);
         bestseller_btn.setOnClickListener(this);
-        home_btn.setOnClickListener(this);
-        myorder_btn.setOnClickListener(this);
-        profile_btn.setOnClickListener(this);
+        home_button.setOnClickListener(this);
+        order_button.setOnClickListener(this);
+        profile_button.setOnClickListener(this);
 
     }
 
@@ -76,14 +76,22 @@ public class home_page extends AppCompatActivity implements View.OnClickListener
                 break;
 
 
-            case R.id.myorder_btn:
-
-                //intent =  new Intent(home_page.this, myorder_page.class);
-                //startActivity(intent);
+            case R.id.home_button:
+                Intent intent = new Intent(getApplicationContext(), home_page.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
 
                 break;
 
-            case R.id.profile_btn:
+
+            case R.id.order_button:
+
+                intent =  new Intent(getApplicationContext(), user_order_page.class);
+                startActivity(intent);
+
+                break;
+
+            case R.id.profile_button:
 
                 //intent =  new Intent(home_page.this, profile_page.class);
                 //startActivity(intent);

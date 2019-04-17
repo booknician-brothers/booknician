@@ -1,5 +1,6 @@
 package vishnu.rai.booknician;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -34,13 +36,14 @@ public class Orderpage extends AppCompatActivity implements View.OnClickListener
 
     ImageView home_button, order_button, profile_button;
 
-
-
+    FirebaseDatabase image_database = FirebaseDatabase.getInstance();
 
     String orderpage_bookname, orderpage_authorname, orderpage_bookinstock,orderpage_priceforfixday,
             orderpage_bookdailyprice,orderpage_bookdescription;
 
     String orderpage_bookimage;
+
+    ProgressDialog progressdialog;
 
 
     @Override
@@ -55,6 +58,10 @@ public class Orderpage extends AppCompatActivity implements View.OnClickListener
         home_button.setOnClickListener(this);
         profile_button.setOnClickListener(this);
         order_button.setOnClickListener(this);
+
+        progressdialog = new ProgressDialog(Orderpage.this);
+        progressdialog.setMessage("Please Wait....");
+        progressdialog.show();
 
 
 
@@ -83,14 +90,41 @@ public class Orderpage extends AppCompatActivity implements View.OnClickListener
 
                         orderpage_bookname_tv.setText(orderpage_bookname);
 
-                        //adding image
+                        image_database.getReference().child("Books").child(orderpage_bookname).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        Picasso.with(Orderpage.this)
-                                .load(orderpage_bookimage)
-                                .into(orderpage_bookimage_iv);
 
-                        //image added
+                                String image_url =  dataSnapshot.child("image").getValue(String.class);
 
+                                Picasso.with(Orderpage.this)
+                                        .load(image_url)
+                                        .into(orderpage_bookimage_iv, new Callback() {
+
+                                            @Override
+                                            public void onSuccess() {
+
+                                                progressdialog.dismiss();
+
+                                            }
+
+                                            @Override
+                                            public void onError() {
+
+                                                progressdialog.dismiss();
+
+                                                Toast.makeText(getApplicationContext(),"Image Not Loading", Toast.LENGTH_LONG).show();
+
+                                            }
+                                        });
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
 
                     }
 
@@ -117,6 +151,7 @@ public class Orderpage extends AppCompatActivity implements View.OnClickListener
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(Orderpage.this, addressphone.class);
+                            intent.putExtra("Book name",orderpage_bookname );
                             startActivity(intent);
                         }
                     });
@@ -160,11 +195,18 @@ public class Orderpage extends AppCompatActivity implements View.OnClickListener
 
                 break;
 
-            case R.id.profile_button:
+
+            case R.id.order_button:
+
+                intent =  new Intent(getApplicationContext(), user_order_page.class);
+                startActivity(intent);
 
                 break;
 
-            case R.id.order_button:
+            case R.id.profile_button:
+
+                //intent =  new Intent(home_page.this, profile_page.class);
+                //startActivity(intent);
 
                 break;
         }

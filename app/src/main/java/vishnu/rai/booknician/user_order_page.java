@@ -7,14 +7,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,14 +26,25 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import vishnu.rai.booknician.View_holder.item_view_holder;
+import vishnu.rai.booknician.View_holder.orderpage_item_view_holder;
+import vishnu.rai.booknician.model.orderpage_recyclerview_item;
 import vishnu.rai.booknician.model.recyclerview_item;
 
-public class Allbookshowpage extends AppCompatActivity implements View.OnClickListener {
+public class user_order_page extends AppCompatActivity implements View.OnClickListener {
 
-    RecyclerView allbooks_recycler_view;
+
+
+    RecyclerView order_page_recycler_view;
 
     public static String allbook_clicked_name;
+
+    public String userid;
 
     ImageView home_button, order_button, profile_button;
 
@@ -40,15 +54,19 @@ public class Allbookshowpage extends AppCompatActivity implements View.OnClickLi
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-    FirebaseRecyclerOptions<recyclerview_item> options;
+    DatabaseReference dayscount = database.getReference();
 
-    FirebaseRecyclerAdapter<recyclerview_item, item_view_holder> adapter;
+    FirebaseRecyclerOptions<orderpage_recyclerview_item> options;
+
+    FirebaseRecyclerAdapter<orderpage_recyclerview_item, orderpage_item_view_holder> adapter;
+
+    FirebaseAuth mAuth= FirebaseAuth.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.all_book_page);
-
+        setContentView(R.layout.user_order_page);
 
 
         home_button=findViewById(R.id.home_button);
@@ -61,26 +79,28 @@ public class Allbookshowpage extends AppCompatActivity implements View.OnClickLi
 
 
 
-        allbooks_recycler_view=findViewById(R.id.allbooks_recycler_view);
+        order_page_recycler_view=findViewById(R.id.order_page_recycler_view);
 
-        progressdialog = new ProgressDialog(Allbookshowpage.this);
+        progressdialog = new ProgressDialog(user_order_page.this);
         progressdialog.setMessage("Please Wait....");
         progressdialog.show();
 
-        allbooks_recycler_view.hasFixedSize();
+        order_page_recycler_view.hasFixedSize();
 
-        mdatabaseReference= FirebaseDatabase.getInstance().getReference().child("Books");
+        userid = mAuth.getCurrentUser().getUid();
 
-        options = new FirebaseRecyclerOptions.Builder<recyclerview_item>().setQuery(mdatabaseReference,recyclerview_item.class).build();
+        mdatabaseReference= FirebaseDatabase.getInstance().getReference().child("Users").child(userid).child("Orders");
+
+        options = new FirebaseRecyclerOptions.Builder<orderpage_recyclerview_item>().setQuery(mdatabaseReference,orderpage_recyclerview_item.class).build();
 
 
-        adapter= new FirebaseRecyclerAdapter<recyclerview_item, item_view_holder>(options) {
+        adapter= new FirebaseRecyclerAdapter<orderpage_recyclerview_item, orderpage_item_view_holder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull final item_view_holder holder, final int position, @NonNull final recyclerview_item model) {
+            protected void onBindViewHolder(@NonNull final orderpage_item_view_holder holder, final int position, @NonNull final orderpage_recyclerview_item model) {
 
 
 
-                Picasso.with(getApplicationContext()).load(model.getImage()).into(holder.book_image, new Callback() {
+                Picasso.with(getApplicationContext()).load(model.getBook_image()).into(holder.op_book_image, new Callback() {
 
                     @Override
                     public void onSuccess() {
@@ -102,21 +122,22 @@ public class Allbookshowpage extends AppCompatActivity implements View.OnClickLi
                 });
 
 
-                holder.book_name.setText(model.getName());
+                holder.op_book_name.setText(model.getBook_name());
 
+                holder.order_date.setText(model.getOrder_date());
 
-                holder.book_name.setOnClickListener(new View.OnClickListener() {
+                holder.op_book_name.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
                         database.getReference().child("Books").addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                            allbook_clicked_name = model.getName();
-
-                            Intent intent= new Intent(Allbookshowpage.this, Allbookorderpage.class);
-                            startActivity(intent);
+                                Intent intent= new Intent(user_order_page.this, retun_page.class);
+                                intent.putExtra("Admin_key", userid+model.getBook_name()+model.getTime_date());
+                                intent.putExtra("User_key", model.getBook_name()+model.getTime_date());
+                                startActivity(intent);
 
                             }
 
@@ -129,32 +150,23 @@ public class Allbookshowpage extends AppCompatActivity implements View.OnClickLi
 
                     }
                 });
-
-
             }
-
-
 
             @NonNull
             @Override
-            public item_view_holder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+            public orderpage_item_view_holder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.books_layout, viewGroup,  false);
-                return new item_view_holder(view);
+                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.user_order_page_layout, viewGroup,  false);
+                return new orderpage_item_view_holder(view);
             }
         };
 
-
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),1);
-        allbooks_recycler_view.setLayoutManager(gridLayoutManager);
+        order_page_recycler_view.setLayoutManager(gridLayoutManager);
         adapter.startListening();
-        allbooks_recycler_view.setAdapter(adapter);
-
+        order_page_recycler_view.setAdapter(adapter);
 
     }
-
-
-
 
     @Override
     public void onClick(View v) {

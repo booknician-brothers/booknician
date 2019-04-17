@@ -11,7 +11,9 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Allbookorderpage"></activity>
+        <activity android:name=".retun_page"></activity>
+        <activity android:name=".user_order_page" />
+        <activity android:name=".Allbookorderpage" />
         <activity android:name=".Allbookshowpage" />
         <activity
             android:name=".forgotpassactivity"

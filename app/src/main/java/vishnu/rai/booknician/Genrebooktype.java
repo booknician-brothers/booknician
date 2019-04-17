@@ -15,8 +15,11 @@ import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -31,7 +34,7 @@ public class Genrebooktype extends AppCompatActivity implements View.OnClickList
 
     ProgressDialog progressdialog;
 
-
+    FirebaseDatabase image_database = FirebaseDatabase.getInstance();
 
     public static int  genre_book_position;
 
@@ -69,25 +72,43 @@ public class Genrebooktype extends AppCompatActivity implements View.OnClickList
 
         adapter= new FirebaseRecyclerAdapter<recyclerview_item, item_view_holder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull item_view_holder holder, final int position, @NonNull recyclerview_item model) {
+            protected void onBindViewHolder(@NonNull final item_view_holder holder, final int position, @NonNull recyclerview_item model) {
 
 
-
-                Picasso.with(getApplicationContext()).load(model.getImage()).into(holder.book_image, new Callback() {
-
+                image_database.getReference().child("Books").child(model.getName()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onSuccess() {
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                        String image_url =  dataSnapshot.child("image").getValue(String.class);
+
+                        Picasso.with(getApplicationContext()).load(image_url).into(holder.book_image, new Callback() {
+
+                            @Override
+                            public void onSuccess() {
+                                progressdialog.dismiss();
+
+
+                            }
+
+                            @Override
+                            public void onError() {
+
+                                progressdialog.dismiss();
+
+                                Toast.makeText(getApplicationContext(),"Image Not Loading", Toast.LENGTH_LONG).show();
+
+                            }
+                        });
+
 
                     }
 
                     @Override
-                    public void onError() {
-
-                        Toast.makeText(getApplicationContext(),"Image Not Loading", Toast.LENGTH_LONG).show();
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
                 });
-
 
                 holder.book_name.setText(model.getName());
 
@@ -101,15 +122,9 @@ public class Genrebooktype extends AppCompatActivity implements View.OnClickList
                         Intent intent= new Intent(Genrebooktype.this, Orderpage.class);
                         startActivity(intent);
 
-
                     }
                 });
-
-
-                progressdialog.dismiss();
-
             }
-
 
 
             @NonNull
@@ -120,7 +135,6 @@ public class Genrebooktype extends AppCompatActivity implements View.OnClickList
                 return new item_view_holder(view);
             }
         };
-
 
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),1);
@@ -165,11 +179,18 @@ public class Genrebooktype extends AppCompatActivity implements View.OnClickList
 
                 break;
 
-            case R.id.profile_button:
+
+            case R.id.order_button:
+
+                intent =  new Intent(getApplicationContext(), user_order_page.class);
+                startActivity(intent);
 
                 break;
 
-            case R.id.order_button:
+            case R.id.profile_button:
+
+                //intent =  new Intent(home_page.this, profile_page.class);
+                //startActivity(intent);
 
                 break;
         }

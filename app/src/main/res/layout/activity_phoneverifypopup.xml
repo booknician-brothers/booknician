@@ -20,6 +20,7 @@
         android:textSize="20dp" />
 
     <EditText
+        android:id="@+id/otp_et"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:hint="Enter OTP"
@@ -28,6 +29,7 @@
         android:gravity="center"/>
 
     <Button
+        android:id="@+id/submit_otp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -37,6 +39,7 @@
         android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
     <Button
+        android:id="@+id/resend_otp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

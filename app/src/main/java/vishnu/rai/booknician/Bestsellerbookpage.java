@@ -15,8 +15,11 @@ import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -36,6 +39,9 @@ public class Bestsellerbookpage extends AppCompatActivity implements View.OnClic
     DatabaseReference mdatabaseReference;
     FirebaseRecyclerOptions<recyclerview_item> options;
     FirebaseRecyclerAdapter<recyclerview_item, item_view_holder> adapter;
+
+    FirebaseDatabase image_database = FirebaseDatabase.getInstance();
+
 
 
     @Override
@@ -67,21 +73,40 @@ public class Bestsellerbookpage extends AppCompatActivity implements View.OnClic
 
         adapter= new FirebaseRecyclerAdapter<recyclerview_item, item_view_holder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull item_view_holder holder, final int position, @NonNull recyclerview_item model) {
+            protected void onBindViewHolder(@NonNull final item_view_holder holder, final int position, @NonNull recyclerview_item model) {
 
 
-
-                Picasso.with(getApplicationContext()).load(model.getImage()).into(holder.book_image, new Callback() {
-
+                image_database.getReference().child("Books").child(model.getName()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onSuccess() {
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                        String image_url =  dataSnapshot.child("image").getValue(String.class);
+
+                        Picasso.with(getApplicationContext()).load(image_url).into(holder.book_image, new Callback() {
+
+                            @Override
+                            public void onSuccess() {
+                                progressdialog.dismiss();
+
+
+                            }
+
+                            @Override
+                            public void onError() {
+
+                                progressdialog.dismiss();
+
+                                Toast.makeText(getApplicationContext(),"Image Not Loading", Toast.LENGTH_LONG).show();
+
+                            }
+                        });
+
 
                     }
 
                     @Override
-                    public void onError() {
-
-                        Toast.makeText(getApplicationContext(),"Image Not Loading", Toast.LENGTH_LONG).show();
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
                 });
@@ -104,7 +129,6 @@ public class Bestsellerbookpage extends AppCompatActivity implements View.OnClic
                 });
 
 
-                progressdialog.dismiss();
             }
 
 
@@ -161,11 +185,18 @@ public class Bestsellerbookpage extends AppCompatActivity implements View.OnClic
 
                 break;
 
-            case R.id.profile_button:
+
+            case R.id.order_button:
+
+                intent =  new Intent(getApplicationContext(), user_order_page.class);
+                startActivity(intent);
 
                 break;
 
-            case R.id.order_button:
+            case R.id.profile_button:
+
+                //intent =  new Intent(home_page.this, profile_page.class);
+                //startActivity(intent);
 
                 break;
         }

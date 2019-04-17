@@ -109,6 +109,21 @@
                     android:hint="Email"
                     android:inputType="textEmailAddress" />
 
+
+                <EditText
+                    android:id="@+id/adresssignup_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/rounded_white"
+                    android:drawableLeft="@drawable/na"
+                    android:hint="Adress"
+                    android:inputType="textPersonName" />
+
+
+
                 <EditText
                     android:id="@+id/passwordsignup_et"
                     android:layout_width="match_parent"

@@ -137,11 +137,18 @@ public class Genrepage extends AppCompatActivity implements View.OnClickListener
 
                 break;
 
-            case R.id.profile_button:
+
+            case R.id.order_button:
+
+                intent =  new Intent(getApplicationContext(), user_order_page.class);
+                startActivity(intent);
 
                 break;
 
-            case R.id.order_button:
+            case R.id.profile_button:
+
+                //intent =  new Intent(home_page.this, profile_page.class);
+                //startActivity(intent);
 
                 break;
 

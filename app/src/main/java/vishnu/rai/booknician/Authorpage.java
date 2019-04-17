@@ -1,5 +1,6 @@
 package vishnu.rai.booknician;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +34,8 @@ public class Authorpage extends AppCompatActivity implements View.OnClickListene
 
     public static String  authorname_clicked_name;
 
+    ProgressDialog progressdialog;
+
     DatabaseReference mdatabaseReference;
     FirebaseRecyclerOptions<recyclerview_item> options;
     FirebaseRecyclerAdapter<recyclerview_item, item_view_holder> adapter;
@@ -42,6 +45,10 @@ public class Authorpage extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.author_page);
 
+
+        progressdialog = new ProgressDialog(Authorpage.this);
+        progressdialog.setMessage("Please Wait....");
+        progressdialog.show();
 
         home_button=findViewById(R.id.home_button);
         order_button=findViewById(R.id.order_button);
@@ -66,6 +73,7 @@ public class Authorpage extends AppCompatActivity implements View.OnClickListene
 
 
                 holder.author_name.setText(model.getAuthorname());
+                progressdialog.dismiss();
 
 
                 holder.author_name.setOnClickListener(new View.OnClickListener() {
@@ -86,8 +94,6 @@ public class Authorpage extends AppCompatActivity implements View.OnClickListene
                             }
                         });
 
-
-                        //Toast.makeText(Authorpage.this,authorname_clicked_name,Toast.LENGTH_LONG).show();
                         Intent intent= new Intent(Authorpage.this, Authorwisebooknamepage.class);
                         startActivity(intent);
 
@@ -153,11 +159,18 @@ public class Authorpage extends AppCompatActivity implements View.OnClickListene
 
                 break;
 
-            case R.id.profile_button:
+
+            case R.id.order_button:
+
+                intent =  new Intent(getApplicationContext(), user_order_page.class);
+                startActivity(intent);
 
                 break;
 
-            case R.id.order_button:
+            case R.id.profile_button:
+
+                //intent =  new Intent(home_page.this, profile_page.class);
+                //startActivity(intent);
 
                 break;
 

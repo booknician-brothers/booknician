@@ -106,51 +106,7 @@ public class retun_page extends AppCompatActivity implements View.OnClickListene
                 book_name_rp.setText(str_book_name_rp);
                 order_date_rp.setText(str_order_date_rp);
 
-
-                return_btn_rp.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-
-
-                        final String today_date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-
-
-                        // date diifference
-
-
-                        SimpleDateFormat sdFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                        try {
-                            Date startDateObj = sdFormat.parse(today_date);
-                            Date endDateObj = sdFormat.parse(str_order_date_rp);
-
-
-                            // find time difference in milli seconds
-                            long timeDiff = endDateObj.getTime() - startDateObj.getTime();
-
-                            // time difference in minutes
-                            long daysDiff = timeDiff/(1000*60*60*24);
-
-                            Toast.makeText(getApplicationContext(), String.valueOf(daysDiff)+"hey", Toast.LENGTH_LONG).show();
-
-
-                        } catch (ParseException e) {
-                            // TODO Auto-generated catch block
-
-                            Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_LONG).show();
-
-                            e.printStackTrace();
-                        }
-
-
-
-                        //end
-
-                    }
-                });
-
-
-
+                final String today_date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
 
                 Picasso.with(getApplicationContext()).load(str_book_image_rp).into(book_image_rp, new Callback() {

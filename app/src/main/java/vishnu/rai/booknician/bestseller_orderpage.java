@@ -139,6 +139,7 @@ public class bestseller_orderpage extends AppCompatActivity implements View.OnCl
                                 public void onClick(View v) {
                                     Intent intent = new Intent(bestseller_orderpage.this, addressphone.class);
                                     intent.putExtra("Book name",orderpage_bookname );
+                                    intent.putExtra("Bookcount",orderpage_bookinstock );
                                     startActivity(intent);
                                 }
                             });
@@ -204,8 +205,8 @@ public class bestseller_orderpage extends AppCompatActivity implements View.OnCl
 
             case R.id.profile_button:
 
-                //intent =  new Intent(home_page.this, profile_page.class);
-                //startActivity(intent);
+                intent =  new Intent(getApplicationContext(), profile_page.class);
+                startActivity(intent);
 
                 break;
         }

@@ -1,7 +1,10 @@
 package vishnu.rai.booknician;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -24,7 +27,7 @@ public class Loginpage extends AppCompatActivity implements View.OnClickListener
     private FirebaseAuth.AuthStateListener AuthListner;
     private FirebaseAuth mAuth;
 
-
+    ProgressDialog progressdialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +78,11 @@ public class Loginpage extends AppCompatActivity implements View.OnClickListener
                 break;
 
             case R.id.login_btn:
+
+                progressdialog = new ProgressDialog(Loginpage.this);
+                progressdialog.setMessage("Please Wait....");
+                progressdialog.show();
+
                 login();
                 break;
 
@@ -84,17 +92,25 @@ public class Loginpage extends AppCompatActivity implements View.OnClickListener
                 break;
 
             case R.id.forgotpassword_tv:
-                startActivity(new Intent(Loginpage.this, forgotpassactivity.class));
+
+                Intent intent= new Intent(Loginpage.this, forgotpassactivity.class);
+                startActivity(intent);
                 break;
 
         }
 
     }
 
+
+
     @Override
     protected  void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(AuthListner);
+        if(mAuth.getCurrentUser() != null) {
+            Intent intent = new Intent(getApplicationContext(), home_page.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);        }
     }
 
 
@@ -104,6 +120,8 @@ public class Loginpage extends AppCompatActivity implements View.OnClickListener
         String Password = password_et.getText().toString();
 
         if(TextUtils.isEmpty(Email)|| TextUtils.isEmpty(Password)){
+
+            progressdialog.dismiss();
             Toast.makeText(Loginpage.this, "Feild empty", Toast.LENGTH_LONG).show();
 
         }
@@ -114,12 +132,33 @@ public class Loginpage extends AppCompatActivity implements View.OnClickListener
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                     if (!task.isSuccessful()) {
+                        progressdialog.dismiss();
                         Toast.makeText(Loginpage.this, "Sign in problem", Toast.LENGTH_LONG).show();
                     }
-
+                    else
+                    {
+                        progressdialog.dismiss();
+                        Intent intent = new Intent(getApplicationContext(), home_page.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
                 }
             });
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Really Exit?")
+                .setMessage("Are you sure you want to exit?")
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Loginpage.super.onBackPressed();
+                    }
+                }).create().show();
     }
 }
 

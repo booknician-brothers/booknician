@@ -1,5 +1,6 @@
 package vishnu.rai.booknician;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class forgotpassactivity extends AppCompatActivity {
 
     Button reset_link_otp;
+    Intent i;
     EditText reset_email_et;
     String reset_email;
 
@@ -33,6 +35,7 @@ public class forgotpassactivity extends AppCompatActivity {
 
         int width=dm.widthPixels;
         int height=dm.heightPixels;
+
 
         getWindow().setLayout((int)(width*.85),(int)(height*.6));
 
@@ -51,20 +54,31 @@ public class forgotpassactivity extends AppCompatActivity {
 
                 reset_email= reset_email_et.getText().toString();
 
-                FirebaseAuth.getInstance().sendPasswordResetEmail(reset_email)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
+                if(reset_email.isEmpty())
+                {
+                    reset_email_et.setError("Empty");
+                    reset_email_et.requestFocus();
+                }
 
-                                    Toast.makeText(forgotpassactivity.this, "Link sent", Toast.LENGTH_LONG).show();
-                                    Intent intent= new Intent(forgotpassactivity.this, Loginpage.class);
-                                    startActivity(intent);
+                else
+                {
+                    FirebaseAuth.getInstance().sendPasswordResetEmail(reset_email)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
 
+                                        Toast.makeText(forgotpassactivity.this, "Link sent", Toast.LENGTH_LONG).show();
+                                        onBackPressed();
+                                    }
+                                    else
+                                    {
+                                        Toast.makeText(forgotpassactivity.this, "Invalid email", Toast.LENGTH_LONG).show();
+
+                                    }
                                 }
-                            }
-                        });
-
+                            });
+                }
             }
         });
 

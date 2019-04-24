@@ -1,6 +1,8 @@
 package vishnu.rai.booknician;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -9,8 +11,14 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
@@ -18,10 +26,13 @@ import java.util.concurrent.TimeUnit;
 
 public class phoneverifypopup extends Activity {
 
-    PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
 
-    EditText otp_et;
+    /*EditText otp_et;
     Button submit_otp, resend_otp;
+
+    Intent i;
+
+    public String OTP;
 
     String otp_entered;
 
@@ -29,6 +40,8 @@ public class phoneverifypopup extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phoneverifypopup);
+
+        OTP = i.getStringExtra("OTP");
 
         DisplayMetrics dm=new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -59,48 +72,43 @@ public class phoneverifypopup extends Activity {
             }
         });
 
-        /*resend_otp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                        Signuppage.phone,        // Phone number to verify
-                        60,                 // Timeout duration
-                        TimeUnit.SECONDS,   // Unit of timeout
-                        this,               // Activity (for callback binding)
-                        mCallbacks);        // OnVerificationStateChangedCallbacks
-
-                mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-
-                    @Override
-                    public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
-
-                    }
-
-                    @Override
-                    public void onVerificationFailed(FirebaseException e) {
-
-                    }
-
-                    @Override
-                    public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                        super.onCodeSent(s, forceResendingToken);
-
-                        Signuppage.otp_send = s;
-                    }
-                };
-            }
-        });*/
-
-
     }
+
+
+
 
     private void verification() {
 
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(Signuppage.otp_send, otp_entered);
-
-        if(Signuppage.otp_send.equals(otp_entered))
-            Signuppage.verified = true;
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(OTP, otp_entered);
+        signInWithPhoneAuthCredential(credential);
 
     }
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+
+                            Signuppage.verified= true;
+                            Intent intent = new Intent(getApplicationContext(), Signuppage.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+
+
+
+                        } else {
+                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                                Signuppage.verified= false;
+                                Toast.makeText(getApplicationContext(),"Wrong OTP", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(getApplicationContext(), Signuppage.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                            }
+                        }
+                    }
+                });
+    }*/
 }

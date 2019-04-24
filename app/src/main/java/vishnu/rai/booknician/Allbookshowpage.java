@@ -1,12 +1,16 @@
 package vishnu.rai.booknician;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +36,7 @@ public class Allbookshowpage extends AppCompatActivity implements View.OnClickLi
 
     public static String allbook_clicked_name;
 
-    ImageView home_button, order_button, profile_button;
+    ImageView home_button, order_button, profile_button,imageView4;
 
     ProgressDialog progressdialog;
 
@@ -43,6 +47,7 @@ public class Allbookshowpage extends AppCompatActivity implements View.OnClickLi
     FirebaseRecyclerOptions<recyclerview_item> options;
 
     FirebaseRecyclerAdapter<recyclerview_item, item_view_holder> adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +65,27 @@ public class Allbookshowpage extends AppCompatActivity implements View.OnClickLi
         order_button.setOnClickListener(this);
 
 
+        getSupportActionBar().setTitle("");
+
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowCustomEnabled(true);
+
+        LayoutInflater inflator = (LayoutInflater) this .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = inflator.inflate(R.layout.icon, null);
+
+        actionBar.setCustomView(v);
+
+        imageView4=findViewById(R.id.imageView4);
+
+        imageView4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),  "Search", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
 
         allbooks_recycler_view=findViewById(R.id.allbooks_recycler_view);
 
@@ -69,7 +95,7 @@ public class Allbookshowpage extends AppCompatActivity implements View.OnClickLi
 
         allbooks_recycler_view.hasFixedSize();
 
-        mdatabaseReference= FirebaseDatabase.getInstance().getReference().child("Books");
+        mdatabaseReference=  FirebaseDatabase.getInstance().getReference().child("Books");
 
         options = new FirebaseRecyclerOptions.Builder<recyclerview_item>().setQuery(mdatabaseReference,recyclerview_item.class).build();
 
@@ -145,6 +171,10 @@ public class Allbookshowpage extends AppCompatActivity implements View.OnClickLi
         };
 
 
+        //adding
+
+
+
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),1);
         allbooks_recycler_view.setLayoutManager(gridLayoutManager);
         adapter.startListening();
@@ -178,8 +208,8 @@ public class Allbookshowpage extends AppCompatActivity implements View.OnClickLi
 
             case R.id.profile_button:
 
-                //intent =  new Intent(home_page.this, profile_page.class);
-                //startActivity(intent);
+                intent =  new Intent(getApplicationContext(), profile_page.class);
+                startActivity(intent);
 
                 break;
         }

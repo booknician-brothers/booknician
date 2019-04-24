@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -55,6 +56,10 @@ public class addressphone extends AppCompatActivity implements View.OnClickListe
 
     public Intent i;
 
+    public String userid, order_date;
+
+    public String email, subject, message,Bookcount;
+
     public String currentDateTimeString;
 
 
@@ -86,6 +91,8 @@ public class addressphone extends AppCompatActivity implements View.OnClickListe
         i = getIntent();
 
         book_name = i.getStringExtra("Book name");
+        Bookcount = i.getStringExtra("Bookcount");
+
 
     }
 
@@ -105,6 +112,14 @@ public class addressphone extends AppCompatActivity implements View.OnClickListe
             case R.id.confirmorder_btn:
 
                 bookdeatil();
+
+                numberofbookinstock_int= Integer.parseInt(Bookcount);
+                numberofbookinstock_int--;
+
+                FirebaseDatabase countdata= FirebaseDatabase.getInstance();
+                DatabaseReference bookcountdata= countdata.getReference();
+
+                bookcountdata.child("Books").child(book_name).child("Book In Stock").setValue(String.valueOf(numberofbookinstock_int));
 
                 Toast.makeText(getApplicationContext(), "Order Placed", Toast.LENGTH_LONG).show();
 
@@ -132,11 +147,44 @@ public class addressphone extends AppCompatActivity implements View.OnClickListe
 
             case R.id.profile_button:
 
-                //intent =  new Intent(home_page.this, profile_page.class);
-                //startActivity(intent);
+                intent =  new Intent(getApplicationContext(), profile_page.class);
+                startActivity(intent);
 
                 break;
         }
+    }
+
+    private void sendEmail() {
+
+        FirebaseDatabase emailData = FirebaseDatabase.getInstance();
+
+        emailData.getReference("Users").child(userid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                email= dataSnapshot.child("Email").getValue(String.class);
+
+                subject = "ORDER PLACED";
+
+                message = "Your book "+book_name+" is placed and you will receive it within 24 hours. " +
+                        "For any queries contact:" +
+                        "7578968856";
+
+                //Creating SendMail object
+                sendmail_java sm = new sendmail_java(addressphone.this, email, subject, message);
+
+                //Executing sendmail to send email
+                sm.execute();
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
 
@@ -144,15 +192,11 @@ public class addressphone extends AppCompatActivity implements View.OnClickListe
 
         FirebaseDatabase book_deatil = FirebaseDatabase.getInstance();
 
-        Toast.makeText(getApplicationContext(), String.valueOf(numberofbookinstock_int), Toast.LENGTH_LONG).show();
-
         book_deatil.getReference("Books").child(book_name).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 book_image = dataSnapshot.child("image").getValue(String.class);
-
-                numberofbookinstock = dataSnapshot.child("Book In Stock").getValue(String.class);
 
                 confirmorder();
 
@@ -168,9 +212,14 @@ public class addressphone extends AppCompatActivity implements View.OnClickListe
 
     private void confirmorder() {
 
-        final String userid = mAuth.getCurrentUser().getUid();
+        userid = mAuth.getCurrentUser().getUid();
 
-        final String order_date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+
+
+        Date c = Calendar.getInstance().getTime();
+
+        order_date = df.format(c);
 
         currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
 
@@ -182,9 +231,11 @@ public class addressphone extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    final_address = dataSnapshot.child("Adress").getValue(String.class);
+                    final_address = dataSnapshot.child("Address").getValue(String.class);
                     final_phone = dataSnapshot.child("Phone no").getValue(String.class);
                     datewiseorder_name = dataSnapshot.child("Name").getValue(String.class);
+
+                    final String Date_child = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
                     order = FirebaseDatabase.getInstance().getReference().child("Users").child(userid).child("Orders").child(book_name + currentDateTimeString);
 
@@ -192,16 +243,17 @@ public class addressphone extends AppCompatActivity implements View.OnClickListe
                     {
 
                         saveData_book_auth.put("order_date", order_date);
+                        saveData_book_auth.put("admin_order_date", Date_child);
                         saveData_book_auth.put("time_date", currentDateTimeString);
                         saveData_book_auth.put("book_name", book_name);
                         saveData_book_auth.put("book_image", book_image);
                         saveData_book_auth.put("address", final_address);
+                        saveData_book_auth.put("return_status", "false");
                         saveData_book_auth.put("phone_no", final_phone);
 
                     }
                     order.setValue(saveData_book_auth);
 
-                    final String Date_child = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
                     datewiseorder = FirebaseDatabase.getInstance().getReference().child("Datewiseorder").child(Date_child).child(userid + book_name + currentDateTimeString);
 
@@ -209,10 +261,12 @@ public class addressphone extends AppCompatActivity implements View.OnClickListe
                     {
 
                         order_date_child.put("Name", datewiseorder_name);
+                        order_date_child.put("admin_order_date", Date_child);
                         order_date_child.put("order_date", order_date);
                         order_date_child.put("book_name", book_name);
                         order_date_child.put("book_image", book_image);
                         order_date_child.put("address", final_address);
+                        order_date_child.put("return_status", "false");
                         order_date_child.put("phone_no", final_phone);
 
                     }
@@ -231,6 +285,7 @@ public class addressphone extends AppCompatActivity implements View.OnClickListe
             final_address = newaddressphone.newaddress_string;
             final_phone = newaddressphone.newphonenumber_string;
 
+            final String Date_child = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
             order = FirebaseDatabase.getInstance().getReference().child("Users").child(userid).child("Orders").child(book_name + currentDateTimeString);
 
@@ -239,7 +294,9 @@ public class addressphone extends AppCompatActivity implements View.OnClickListe
 
                 saveData_book_auth.put("order_date", order_date);
                 saveData_book_auth.put("time_date", currentDateTimeString);
+                saveData_book_auth.put("admin_order_date", Date_child);
                 saveData_book_auth.put("book_name", book_name);
+                saveData_book_auth.put("return_status", "false");
                 saveData_book_auth.put("book_image", book_image);
                 saveData_book_auth.put("address", final_address);
                 saveData_book_auth.put("phone_no", final_phone);
@@ -257,14 +314,15 @@ public class addressphone extends AppCompatActivity implements View.OnClickListe
 
                     datewiseorder_name = dataSnapshot.child("Name").getValue(String.class);
 
-                    datewiseorder = FirebaseDatabase.getInstance().getReference().child("Datewiseorder")
-                            .child(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date())).child(userid + book_name + currentDateTimeString);
+                    datewiseorder = FirebaseDatabase.getInstance().getReference().child("Datewiseorder").child(Date_child).child(userid + book_name + currentDateTimeString);
 
                     Map order_date_child = new HashMap();
                     {
 
                         order_date_child.put("Name", datewiseorder_name);
                         order_date_child.put("order_date", order_date);
+                        order_date_child.put("admin_order_date", Date_child);
+                        order_date_child.put("return_status", "false");
                         order_date_child.put("book_name", book_name);
                         order_date_child.put("book_image", book_image);
                         order_date_child.put("address", final_address);
@@ -282,6 +340,9 @@ public class addressphone extends AppCompatActivity implements View.OnClickListe
 
 
         }
+
+        //sendEmail();
+
     }
 }
 

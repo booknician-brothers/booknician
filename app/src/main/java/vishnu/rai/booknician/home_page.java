@@ -49,6 +49,8 @@ public class home_page extends AppCompatActivity implements View.OnClickListener
 
             case R.id.genre_btn:
 
+                genre_btn.getTextColors();
+
                 intent = new Intent(home_page.this, Genrepage.class);
                 startActivity(intent);
 
@@ -76,14 +78,6 @@ public class home_page extends AppCompatActivity implements View.OnClickListener
                 break;
 
 
-            case R.id.home_button:
-                Intent intent = new Intent(getApplicationContext(), home_page.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-
-                break;
-
-
             case R.id.order_button:
 
                 intent =  new Intent(getApplicationContext(), user_order_page.class);
@@ -93,8 +87,8 @@ public class home_page extends AppCompatActivity implements View.OnClickListener
 
             case R.id.profile_button:
 
-                //intent =  new Intent(home_page.this, profile_page.class);
-                //startActivity(intent);
+                intent =  new Intent(home_page.this, profile_page.class);
+                startActivity(intent);
 
                 break;
 
@@ -115,7 +109,5 @@ public class home_page extends AppCompatActivity implements View.OnClickListener
                         home_page.super.onBackPressed();
                     }
                 }).create().show();
-
-
     }
 }

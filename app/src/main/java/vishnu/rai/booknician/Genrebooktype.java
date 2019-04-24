@@ -189,8 +189,8 @@ public class Genrebooktype extends AppCompatActivity implements View.OnClickList
 
             case R.id.profile_button:
 
-                //intent =  new Intent(home_page.this, profile_page.class);
-                //startActivity(intent);
+                intent =  new Intent(getApplicationContext(), profile_page.class);
+                startActivity(intent);
 
                 break;
         }

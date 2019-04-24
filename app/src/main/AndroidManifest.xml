@@ -11,7 +11,9 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".retun_page"></activity>
+        <activity android:name=".edit_profile"></activity>
+        <activity android:name=".profile_page" />
+        <activity android:name=".retun_page" />
         <activity android:name=".user_order_page" />
         <activity android:name=".Allbookorderpage" />
         <activity android:name=".Allbookshowpage" />
@@ -36,10 +38,13 @@
         <activity android:name=".Loginpage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name=".NotificationReciever">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
-
 </manifest>

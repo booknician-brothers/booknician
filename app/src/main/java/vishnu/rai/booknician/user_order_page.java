@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -61,6 +62,8 @@ public class user_order_page extends AppCompatActivity implements View.OnClickLi
     FirebaseRecyclerAdapter<orderpage_recyclerview_item, orderpage_item_view_holder> adapter;
 
     FirebaseAuth mAuth= FirebaseAuth.getInstance();
+
+    public  String Fix_price, Daily_price;
 
 
     @Override
@@ -105,8 +108,29 @@ public class user_order_page extends AppCompatActivity implements View.OnClickLi
                     @Override
                     public void onSuccess() {
 
-                        progressdialog.dismiss();
 
+                        FirebaseDatabase return_detail = FirebaseDatabase.getInstance();
+
+                        DatabaseReference return_data= return_detail.getReference();
+
+                        return_data.child("Books").child(model.getBook_name()).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                Fix_price= dataSnapshot.child("Fix Price").getValue(String.class);
+                                Daily_price= dataSnapshot.child("Daily Price").getValue(String.class);
+
+                                progressdialog.dismiss();
+
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+
+                            }
+                        });
 
                     }
 
@@ -126,6 +150,7 @@ public class user_order_page extends AppCompatActivity implements View.OnClickLi
 
                 holder.order_date.setText(model.getOrder_date());
 
+
                 holder.op_book_name.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -137,6 +162,10 @@ public class user_order_page extends AppCompatActivity implements View.OnClickLi
                                 Intent intent= new Intent(user_order_page.this, retun_page.class);
                                 intent.putExtra("Admin_key", userid+model.getBook_name()+model.getTime_date());
                                 intent.putExtra("User_key", model.getBook_name()+model.getTime_date());
+                                intent.putExtra("Book_name", model.getBook_name());
+                                intent.putExtra("Fix_price", Fix_price);
+                                intent.putExtra("Daily_price", Daily_price);
+
                                 startActivity(intent);
 
                             }
@@ -180,18 +209,10 @@ public class user_order_page extends AppCompatActivity implements View.OnClickLi
 
                 break;
 
-
-            case R.id.order_button:
-
-                intent =  new Intent(getApplicationContext(), user_order_page.class);
-                startActivity(intent);
-
-                break;
-
             case R.id.profile_button:
 
-                //intent =  new Intent(home_page.this, profile_page.class);
-                //startActivity(intent);
+                intent =  new Intent(getApplicationContext(), profile_page.class);
+                startActivity(intent);
 
                 break;
         }

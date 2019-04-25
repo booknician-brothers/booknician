@@ -81,7 +81,8 @@ public class Allbookshowpage extends AppCompatActivity implements View.OnClickLi
         imageView4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),  "Search", Toast.LENGTH_LONG).show();
+                Intent intent= new Intent(Allbookshowpage.this, SearchBooks.class);
+                startActivity(intent);
             }
         });
 

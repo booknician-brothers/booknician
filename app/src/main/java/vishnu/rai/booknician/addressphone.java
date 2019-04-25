@@ -40,6 +40,9 @@ public class addressphone extends AppCompatActivity implements View.OnClickListe
 
     DatabaseReference order = orderlist.getReference();
 
+    DatabaseReference save_date_name = orderlist.getReference();
+
+
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     DatabaseReference myRef = database.getReference();
@@ -176,6 +179,8 @@ public class addressphone extends AppCompatActivity implements View.OnClickListe
                 //Executing sendmail to send email
                 sm.execute();
 
+                sendEmail();
+
 
             }
 
@@ -272,6 +277,21 @@ public class addressphone extends AppCompatActivity implements View.OnClickListe
                     }
                     datewiseorder.setValue(order_date_child);
 
+
+
+                    save_date_name = FirebaseDatabase.getInstance().getReference().child("Date").child(Date_child);
+
+                    Map saveData_date = new HashMap();
+                    {
+
+                        saveData_date.put("Date", Date_child);
+
+                    }
+                    save_date_name.setValue(saveData_date);
+
+
+
+
                 }
 
                 @Override
@@ -304,6 +324,19 @@ public class addressphone extends AppCompatActivity implements View.OnClickListe
 
             }
             order.setValue(saveData_book_auth);
+
+
+
+            save_date_name = FirebaseDatabase.getInstance().getReference().child("Date").child(Date_child);
+
+            Map saveData_date = new HashMap();
+            {
+
+                saveData_date.put("Date", Date_child);
+
+            }
+            save_date_name.setValue(saveData_date);
+
 
 
             FirebaseDatabase datewise_name = FirebaseDatabase.getInstance();
@@ -340,9 +373,6 @@ public class addressphone extends AppCompatActivity implements View.OnClickListe
 
 
         }
-
-        //sendEmail();
-
     }
 }
 
